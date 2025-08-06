@@ -1,0 +1,219 @@
+
+body, html {
+    margin: 0;
+
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Playfair Display', serif;
+    color: #14784f;
+    overflow-x: hidden;
+    font-size: 1.1em;
+}
+
+.background-container-about {
+    background-image: url('what_inspire_us.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 50px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.about-main-content {
+    max-width: 1000px;
+    width: 90%;
+    text-align: left;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2;
+}
+
+.about-title {
+    font-family: 'Great Vibes', cursive;
+    font-weight: normal;
+    font-size: 6em;
+    color: #A2E8A2;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    margin-bottom: 40px;
+    margin-left: 20px;
+    position: relative;
+    z-index: 3;
+    transition: margin-bottom 0.5s ease;
+}
+
+.about-content-layout {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin-top: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    height: 0;
+    overflow: hidden;
+    margin-top: -20px;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.about-title:hover + .about-content-layout,
+.about-content-layout:hover {
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+    overflow: visible;
+    margin-top: 20px;
+    pointer-events: auto;
+}
+
+.about-title:hover {
+    margin-bottom: 20px;
+}
+
+.about-text-left {
+    flex: 2;
+    padding-right: 20px;
+}
+
+.about-text-left p {
+    font-size: 1.25em;
+    line-height: 1.8;
+    color: #d0d0d0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.about-quotes-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.about-quotes-right .quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.15em;
+    line-height: 1.6;
+    color: #d0d0d0;
+    text-align: right;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    margin-bottom: 25px;
+}
+
+.believe-in-title {
+    font-family: 'Great Vibes', cursive;
+    font-weight: normal;
+    font-size: 3em;
+    color: #A2E8A2;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    margin-top: 40px;
+    text-align: right;
+}
+
+.back-link-container {
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.back-link {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #f0f0f0;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.back-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Leaf animation area */
+.leaf-area-about {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.leaf {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #A2E8A2;
+    opacity: 0.6;
+    border-radius: 50% 0;
+    transform: rotate(45deg);
+    animation: fallLeaf linear infinite;
+}
+
+@keyframes fallLeaf {
+    0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .about-title {
+        font-size: 4.5em;
+        margin-left: 0;
+        text-align: center;
+    }
+    .about-content-layout {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        margin-top: 0;
+    }
+    .about-text-left, .about-quotes-right {
+        flex: none;
+        width: 100%;
+        padding-right: 0;
+    }
+    .about-text-left p, .about-quotes-right .quote {
+        text-align: center;
+        font-size: 1.1em;
+    }
+    .believe-in-title {
+        font-size: 2.5em;
+        text-align: center;
+    }
+    .background-container-about {
+        padding-top: 20px;
+    }
+}
+
+@media (max-width: 500px) {
+    .about-title {
+        font-size: 3.5em;
+    }
+    .believe-in-title {
+        font-size: 2em;
+    }
+    .about-text-left p, .about-quotes-right .quote {
+        font-size: 1em;
+    }
+}
+

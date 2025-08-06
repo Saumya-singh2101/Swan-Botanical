@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Our Products</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <style>
+        /* General Body and Layout */
+        body {
+            font-family: 'Playfair Display', serif;
+            background: #d6ecd6 url('product.png') no-repeat right center/contain; /* Ensure 'product.png' exists or remove */
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+        }
+
+        /* Filters Panel (Left Sidebar) */
+        .filters-panel {
+            background: #2d3e2f;
+            width: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 30px;
+            position: relative;
+            min-height: 100vh;
+            z-index: 2;
+            flex-shrink: 0;
+        }
+
+        .filters-title {
+            color: #e6f5e6;
+            font-size: 40px;
+            writing-mode: vertical-lr;
+            transform: rotate(180deg);
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            align-self: center;
+        }
+
+        .filter-tab {
+            width: 120px;
+            height: 60px;
+            background: #3b4c3b;
+            color: #e6f5e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            border-radius: 0 30px 30px 0;
+            font-size: 16px;
+            writing-mode: vertical-rl;
+            text-align: center;
+            letter-spacing: 1px;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-left: 4px solid #2d3e2f;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .filter-tab:hover, .filter-tab.active {
+            background: #4a6a4a;
+        }
+
+        /* Dropdown Menus */
+        .dropdown {
+            display: none;
+            position: absolute;
+            left: 120px;
+            top: 0;
+            background: #e6f5e6;
+            color: #222;
+            min-width: 220px;
+            border-radius: 0 10px 10px 10px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            padding: 16px 18px;
+            z-index: 10;
+            font-size: 15px;
+            font-family: 'Playfair Display', serif;
+            flex-direction: column;
+            align-items: flex-start;
+            border-left: 1px solid #c2e0c2;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .filter-tab.active .dropdown {
+            display: flex;
+        }
+        .dropdown ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            width: 100%;
+        }
+        .dropdown li {
+            padding: 6px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.15s;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dropdown li.selected {
+            background: #c2e0c2;
+            font-weight: bold;
+        }
+        .dropdown li:hover {
+            background: #c2e0c2;
+        }
+        .dropdown .dropdown-title {
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #2d3e2f;
+            font-size: 16px;
+        }
+        .dropdown .dropdown-subtitle {
+            font-size: 14px;
+            color: #4a6a4a;
+            margin-top: 10px;
+            margin-bottom: 2px;
+            font-weight: bold;
+        }
+        .dropdown .add-btn {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 4px 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+            transition: background-color 0.2s;
+        }
+        .dropdown .add-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Selected Summary (within Filters Panel) */
+        .selected-summary {
+            margin-top: 40px;
+            background: #e6f5e6;
+            color: #2d3e2f;
+            border-radius: 10px;
+            padding: 16px 10px;
+            width: 90%;
+            font-size: 15px;
+            font-family: 'Playfair Display', serif;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: flex-start;
+        }
+        .selected-summary span {
+            font-weight: bold;
+            color: #2d3e2f;
+            margin-right: 6px;
+        }
+        .summary-kind-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 4px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+        .summary-kind-item:last-child {
+            border-bottom: none;
+        }
+        .summary-kind-item strong {
+            color: #2d3e2f;
+            font-weight: bold;
+            font-size: 14px;
+            flex-grow: 1;
+        }
+
+        /* Quantity Controls */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .quantity-btn {
+            background-color: #4a6a4a;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .quantity-btn:hover {
+            background-color: #2d3e2f;
+        }
+        .quantity-display {
+            min-width: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Action Bar (within Filters Panel) */
+        .action-bar {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 24px auto 0 auto;
+            align-items: stretch;
+        }
+        .ready-order {
+            background: #3b4c3b;
+            color: #e6f5e6;
+            padding: 12px 0;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .ready-order:disabled {
+            background: #a0e0c0;
+            color: #3b4c3b;
+            cursor: not-allowed;
+        }
+        .ready-order:not(:disabled):hover {
+            background: #2d3e2f;
+            color: #a0e0c0;
+        }
+        .back-link {
+            display: block;
+            margin: 30px auto 0 auto;
+            padding: 10px 20px;
+            background-color: #2d3e2f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            transition: background-color 0.3s;
+            width: 80%;
+        }
+        .back-link:hover {
+            background-color: #3e5e3f;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 40px 0 0 0;
+            position: relative;
+        }
+        .heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            color: #111;
+            margin-top: 0;
+            margin-bottom: 0;
+            font-weight: normal;
+            line-height: 1.1;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Product Display Area (Your Selections Box) */
+        .product-display-area {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 60%;
+            max-width: 700px;
+            margin-top: 150px; /* Space from the top heading */
+            text-align: center;
+            color: #2d3e2f;
+            min-height: 200px; /* Adjusted min-height for better fit */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .product-display-area h2 {
+            font-size: 32px;
+            color: #3b4c3b;
+            margin-bottom: 20px;
+            align-self: center;
+        }
+        .product-display-item {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e0e0e0;
+            align-items: center;
+        }
+        .product-display-item:last-child {
+            border-bottom: none;
+        }
+        .product-display-label {
+            font-weight: bold;
+            min-width: 100px;
+            text-align: left;
+        }
+        .product-display-value {
+            text-align: right;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .product-display-value .kind-item-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        .product-display-value .kind-name {
+            font-weight: normal;
+            text-align: left;
+            flex-grow: 1;
+        }
+        .product-display-value .kind-price {
+            font-weight: bold;
+            margin-left: 10px;
+            min-width: 60px;
+            text-align: right;
+        }
+        .product-display-value .quantity-controls {
+            margin-left: 15px;
+        }
+
+        /* Selected Product Card (The Flipping Image) */
+        #selectedProductCard {
+            perspective: 1000px; /* For 3D effect */
+            width: 250px;
+            height: 250px;
+            margin-top: 30px; /* Space between the box and this card */
+            display: none; /* Hidden by default */
+            cursor: pointer;
+        }
+        #selectedProductCard.visible {
+            display: block; /* Show when a product is selected */
+        }
+        .product-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s; /* Smooth flip animation */
+            transform-style: preserve-3d; /* Keep children in 3D space */
+        }
+        #selectedProductCard.flipped .product-card-inner {
+            transform: rotateY(180deg); /* Flip on Y-axis */
+        }
+        .product-card-front, .product-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Hide back of card during flip */
+            backface-visibility: hidden;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #2d3e2f;
+            background: #f8fff8;
+        }
+        .product-card-front img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%; /* Make image circular */
+            object-fit: cover;
+            border: 4px solid #c2e0c2;
+        }
+        .product-card-back {
+            background-color: #e6f5e6;
+            transform: rotateY(180deg); /* Position back face */
+            justify-content: center;
+            font-size: 14px;
+            padding: 10px; /* Adjust padding for content */
+            overflow-y: auto; /* For long ingredient lists */
+        }
+        .product-card-back p {
+            margin: 5px 0;
+            text-align: center;
+        }
+        .product-card-back strong {
+            color: #3b4c3b;
+        }
+        #ratingStarsInCard {
+            color: gold;
+            font-size: 1.2em;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            body {
+                flex-direction: column;
+            }
+            .filters-panel {
+                flex-direction: row;
+                width: 100vw;
+                height: auto;
+                min-height: unset;
+                padding: 10px;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+            .filters-title {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 28px;
+                margin-bottom: 0;
+                margin-right: 20px;
+            }
+            .filter-tab {
+                writing-mode: horizontal-tb;
+                border-radius: 20px;
+                width: auto;
+                height: 40px;
+                padding: 0 15px;
+                margin: 5px;
+                font-size: 13px;
+            }
+            .dropdown {
+                left: 0;
+                top: 45px;
+                min-width: 160px;
+                border-radius: 10px;
+                border-left: none;
+            }
+            .selected-summary {
+    display: none; /* Sirf summary ko hide karein */
+}
+.action-bar, .back-link {
+    display: block; /* Buttons ko dikhane ke liye */
+    margin-top: 15px; /* Thoda sa space add karein */
+    width: 90%; /* Phone par full width le */
+    text-align: center;
+}
+            .main-content {
+                padding: 20px 0;
+                align-items: center;
+            }
+            .heading {
+                font-size: 36px;
+                position: static;
+                transform: none;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+            .product-display-area {
+                width: 90%;
+                margin-top: 0;
+                padding: 20px;
+            }
+            #selectedProductCard {
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="filters-panel">
+        <div class="filters-title">Filters</div>
+        <div class="filter-tab skin-type" tabindex="0">
+            Skin Type
+            <div class="dropdown">
+                <div class="dropdown-title">Skin Types</div>
+                <ul id="skin-list">
+                    <li>Normal Skin</li>
+                    <li>Dry Skin</li>
+                    <li>Oily Skin</li>
+                    <li>Combination Skin</li>
+                    <li>Sensitive Skin</li>
+                </ul>
+            </div>
+        </div>
+        <div class="filter-tab product" tabindex="0">
+            Product
+            <div class="dropdown" id="product-dropdown">
+                <div class="dropdown-title">Product Categories</div>
+                <ul id="product-category-list">
+                    <li data-category="Cleanser">Cleanser</li>
+                    <li data-category="Toner">Toner</li>
+                    <li data-category="Moisturizer">Moisturizer</li>
+                    <li data-category="Sunscreen">Sunscreen</li>
+                    <li data-category="Serum">Serum</li>
+                    <li data-category="Face Mask">Face Mask</li>
+                    <li data-category="Exfoliator">Exfoliator</li>
+                    <li data-category="Face Oil">Face Oil</li>
+                    <li data-category="Eye Cream">Eye Cream</li>
+                    <li data-category="Spot Treatment">Spot Treatment</li>
+                    <li data-category="Our Speciality">Our Speciality</li>
+                </ul>
+            </div>
+        </div>
+        <div class="filter-tab what-kind" tabindex="0">
+            What Kind
+            <div class="dropdown" id="kind-dropdown">
+                <div class="dropdown-title">Product Kinds</div>
+                <div id="kind-list">
+                    <div class="dropdown-subtitle">Select a Product Category First</div>
+                </div>
+            </div>
+        </div>
+        <div class="selected-summary" id="selected-summary">
+            <div><span>Skin Type:</span> <span id="summary-skin">None</span></div>
+            <div><span>Product:</span> <span id="summary-product">None</span></div>
+            <div><span>Kind:</span> <div id="summary-kind-container">None</div></div>
+        </div>
+        <div class="action-bar">
+            <button class="ready-order" id="readyOrderBtn" disabled>READY SET ORDER</button>
+        </div>
+        <a href="index.html" class="back-link">Go Back to Home</a>
+    </aside>
+    <main class="main-content">
+        <h1 class="heading">Our <br> Products</h1>
+        
+        <div class="product-display-area" id="productDisplayArea">
+            <h2>Your Selections</h2>
+            <div id="selected-skin-display" class="product-display-item">
+                <span class="product-display-label">Skin Type:</span>
+                <span class="product-display-value">None</span>
+            </div>
+            <div id="selected-product-display" class="product-display-item">
+                <span class="product-display-label">Product:</span>
+                <span class="product-display-value">None</span>
+            </div>
+            <div id="selected-kind-display" class="product-display-item">
+                <span class="product-display-label">What Kind:</span>
+                <div class="product-display-value" id="kindDisplayContainer">
+                    None
+                </div>
+            </div>
+        </div>
+
+        <div id="selectedProductCard">
+            <div class="product-card-inner">
+                <div class="product-card-front">
+                    <img id="cardImage" src="" alt="Product Image">
+                    <p><strong><span id="cardProductName"></span></strong></p>
+                    <p>Price: <span id="cardProductPrice"></span></p>
+                </div>
+                <div class="product-card-back">
+                    <p><strong>Ingredients:</strong> <span id="cardIngredients"></span></p>
+                    <p><strong>Rating:</strong> <span id="ratingStarsInCard"></span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // DATA: Product information including name, price, image, ingredients, and rating
+        const productKinds = {
+            "Cleanser": [
+                { name: "Gel Cleanser", price: 500, img: "gentle.png", ingredients: "Aloe Vera, Salicylic Acid, Glycerin", rating: 4.5 },
+                { name: "Cream Cleanser", price: 650, img: "cream.png", ingredients: "Shea Butter, Ceramides, Vitamin E", rating: 4.2 }
+            ],
+            "Toner": [
+                { name: "Hydrating Toner", price: 700, img: "ht.png", ingredients: "Rose Water, Hyaluronic Acid, Niacinamide", rating: 4.3 },
+                { name: "Exfoliating Toner", price: 850, img: "exfoliate.png", ingredients: "Glycolic Acid, Witch Hazel, Aloe Vera", rating: 4.6 }
+            ],
+            "Moisturizer": [
+                { name: "Water-Based Moisturizer", price: 900, img: "hyrolnic marine.png", ingredients: "Hyaluronic Acid, Glycerin, Green Tea Extract", rating: 4.8 },
+                { name: "Oil-Based Moisturizer", price: 1100, img: "mosturizer.png", ingredients: "Jojoba Oil, Shea Butter, Ceramides", rating: 4.4 }
+            ],
+            "Sunscreen": [
+                { name: "Physical (Mineral) Sunscreen", price: 1200, img: "mineral.png", ingredients: "Zinc Oxide, Titanium Dioxide, Niacinamide", rating: 4.5 },
+                { name: "Chemical Sunscreen", price: 1050, img: "sunscreen.png", ingredients: "Avobenzone, Octinoxate, Vitamin E", rating: 4.1 }
+            ],
+            "Serum": [
+                { name: "Vitamin C Serum", price: 1500, img: "vitamiccserum.png", ingredients: "Ascorbic Acid, Ferulic Acid, Vitamin E", rating: 4.7 },
+                { name: "Hyaluronic Acid Serum", price: 1350, img: "hydralonicacid.png", ingredients: "Hyaluronic Acid, B5, Glycerin", rating: 4.6 }
+            ],
+            "Face Mask": [
+                { name: "Clay Mask", price: 400, img: "claymask.png", ingredients: "Kaolin Clay, Bentonite Clay, Tea Tree Oil", rating: 4.4 },
+                { name: "Sheet Mask", price: 250, img: "sheetmask.png", ingredients: "Hyaluronic Acid, Collagen, Ceramides", rating: 4.0 }
+            ],
+            "Exfoliator": [
+                { name: "Physical Scrub", price: 600, img: "physicalscrub.png", ingredients: "Walnut Shell Powder, Glycerin, Aloe Vera", rating: 3.8 },
+                { name: "Chemical Exfoliant", price: 950, img: "exfoliate.png", ingredients: "Salicylic Acid, Lactic Acid, Green Tea", rating: 4.5 }
+            ],
+            "Face Oil": [
+                { name: "Argan Oil", price: 1800, img: "argan.png", ingredients: "100% Pure Argan Oil", rating: 4.9 },
+                { name: "Rosehip Oil", price: 1600, img: "roseship.png", ingredients: "Organic Rosehip Seed Oil, Vitamin A", rating: 4.7 }
+            ],
+            "Eye Cream": [
+                { name: "Anti-Aging Eye Cream", price: 2000, img: "antiaging.png", ingredients: "Retinol, Peptides, Hyaluronic Acid", rating: 4.6 },
+                { name: "Hydrating Eye Cream", price: 1400, img: "hydratingeyecream.png", ingredients: "Cucumber Extract, Caffeine, Vitamin K", rating: 4.2 }
+            ],
+            "Spot Treatment": [
+                { name: "Salicylic Acid Treatment", price: 750, img: "saliylicacid.png", ingredients: "Salicylic Acid, Niacinamide, Zinc PCA", rating: 4.0 },
+                { name: "Benzoyl Peroxide Gel", price: 800, img: "benzoyl.png", ingredients: "Benzoyl Peroxide, Allantoin, Glycerin", rating: 3.9 }
+            ],
+            "Our Speciality": [
+                { name: "Shampoo", price: 900, img: "shampoo.png", ingredients: "Biotin, Keratin, Argan Oil", rating: 4.7 },
+                { name: "Conditioner", price: 850, img: "conditioner.jpg", ingredients: "Shea Butter, Coconut Oil, Vitamin B5", rating: 4.6 },
+                { name: "Hair Oil", price: 1100, img: "hairoil.jpg", ingredients: "Bhringraj, Amla, Hibiscus", rating: 4.8 },
+                { name: "Pack of Three (Shampoo, Conditioner, Hair Oil)", price: 2500, img: "pack.jpg", ingredients: "Complete Hair Care Solution", rating: 4.9 }
+            ]
+        };
+
+        // STATE MANAGEMENT: Keeps track of current selections
+        let selections = {
+            skinType: null,
+            productCategory: null,
+            kinds: {}, // Stores selected kinds with their quantities: { "Gel Cleanser": { name: "Gel Cleanser", price: 500, quantity: 1 } }
+            selectedKindData: null // Stores the detailed data of the *last clicked* kind for the flip card display
+        };
+
+        // DOM ELEMENTS: Get references to necessary HTML elements
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        const skinList = document.getElementById('skin-list');
+        const productCategoryList = document.getElementById('product-category-list');
+        const kindListContainer = document.getElementById('kind-list');
+        const readyOrderBtn = document.getElementById('readyOrderBtn');
+        
+        // Elements for the Summary Panel (left sidebar)
+        const summarySkin = document.getElementById('summary-skin');
+        const summaryProduct = document.getElementById('summary-product');
+        const summaryKindContainer = document.getElementById('summary-kind-container');
+        
+        // Elements for the Main Display Area (right box)
+        const displaySkin = document.querySelector('#selected-skin-display .product-display-value');
+        const displayProduct = document.querySelector('#selected-product-display .product-display-value');
+        const displayKindContainer = document.getElementById('kindDisplayContainer');
+
+        // Elements for the NEW Product Card (below the main display area)
+        const selectedProductCard = document.getElementById('selectedProductCard');
+        const cardImage = document.getElementById('cardImage');
+        const cardProductName = document.getElementById('cardProductName');
+        const cardProductPrice = document.getElementById('cardProductPrice');
+        const cardIngredients = document.getElementById('cardIngredients');
+        const ratingStarsInCard = document.getElementById('ratingStarsInCard');
+        
+        // RENDER/UPDATE FUNCTIONS: Update the UI based on `selections` state
+        const render = () => {
+            // Update summary panel
+            summarySkin.textContent = selections.skinType || 'None';
+            summaryProduct.textContent = selections.productCategory || 'None';
+            
+            // Update main display panel
+            displaySkin.textContent = selections.skinType || 'None';
+            displayProduct.textContent = selections.productCategory || 'None';
+            
+            // Re-render the list of selected kinds (and their quantities)
+            renderSelectedKinds();
+            // Enable/disable the order button
+            updateReadyButtonState();
+        };
+
+        const renderSelectedKinds = () => {
+            // Clear previous content in both summary and display
+            summaryKindContainer.innerHTML = '';
+            displayKindContainer.innerHTML = '';
+            
+            const selectedKinds = Object.values(selections.kinds).filter(k => k.quantity > 0);
+
+            if (selectedKinds.length === 0) {
+                summaryKindContainer.textContent = 'None';
+                displayKindContainer.textContent = 'None';
+                return;
+            }
+
+            // Populate both summary and main display with selected kinds
+            selectedKinds.forEach(kind => {
+                // For the summary panel (left sidebar)
+                const summaryItem = document.createElement('div');
+                summaryItem.className = 'summary-kind-item';
+                summaryItem.innerHTML = `
+                    <strong>${kind.name}</strong>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn decrease" data-name="${kind.name}">-</button>
+                        <span class="quantity-display">${kind.quantity}</span>
+                        <button class="quantity-btn increase" data-name="${kind.name}">+</button>
+                    </div>`;
+                summaryKindContainer.appendChild(summaryItem);
+                
+                // For the main display panel (right box)
+                const displayItem = document.createElement('div');
+                displayItem.className = 'kind-item-display';
+                displayItem.innerHTML = `
+                    <span class="kind-name">${kind.name} (x${kind.quantity})</span>
+                    <span class="kind-price">₹${(kind.price * kind.quantity).toFixed(2)}</span>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn decrease" data-name="${kind.name}">-</button>
+                        <span class="quantity-display">${kind.quantity}</span>
+                        <button class="quantity-btn increase" data-name="${kind.name}">+</button>
+                    </div>`;
+                displayKindContainer.appendChild(displayItem);
+            });
+        };
+        
+        const populateKindDropdown = (category) => {
+            kindListContainer.innerHTML = ''; // Clear previous kinds
+            const kinds = productKinds[category];
+
+            if (!kinds || kinds.length === 0) {
+                kindListContainer.innerHTML = '<div class="dropdown-subtitle">No kinds available for this category.</div>';
+                return;
+            }
+            
+            const ul = document.createElement('ul');
+            kinds.forEach(kind => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${kind.name} - ₹${kind.price}</span>
+                    <button class="add-btn" 
+                        data-name="${kind.name}" 
+                        data-price="${kind.price}" 
+                        data-img="${kind.img}" 
+                        data-ingredients="${kind.ingredients}" 
+                        data-rating="${kind.rating}">Add</button>`;
+                // No longer adding 'selected' class to LI here, as it's multi-select now
+                ul.appendChild(li);
+            });
+            kindListContainer.appendChild(ul);
+        };
+
+        const updateReadyButtonState = () => {
+            // Button is enabled if at least one kind has a quantity greater than 0
+            const hasItems = Object.values(selections.kinds).some(k => k.quantity > 0);
+            readyOrderBtn.disabled = !hasItems;
+        };
+
+        // Function to update and show/hide the product card with flip effect
+        const updateProductCard = (kindData) => {
+            if (kindData) {
+                // Populate card details
+                cardImage.src = kindData.img;
+                cardProductName.textContent = kindData.name;
+                cardProductPrice.textContent = `₹${kindData.price.toFixed(2)}`;
+                cardIngredients.textContent = kindData.ingredients;
+                // Generate star rating string
+                ratingStarsInCard.textContent = '★'.repeat(Math.round(kindData.rating)) + '☆'.repeat(5 - Math.round(kindData.rating));
+                selectedProductCard.classList.add('visible'); // Make the card visible
+                selectedProductCard.classList.remove('flipped'); // Ensure it's not flipped when first displayed/updated
+            } else {
+                selectedProductCard.classList.remove('visible'); // Hide the card if no data
+            }
+        };
+
+        // EVENT HANDLERS: Respond to user interactions
+        // Handle filter tab clicks (open/close dropdowns)
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent document click from immediately closing
+                const isActive = tab.classList.contains('active');
+                // Close all other dropdowns
+                filterTabs.forEach(t => t.classList.remove('active'));
+                // Toggle current tab's active state
+                if (!isActive) {
+                    tab.classList.add('active');
+                }
+            });
+        });
+
+        // Close dropdowns if click outside the filters panel
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.filters-panel')) {
+                filterTabs.forEach(t => t.classList.remove('active'));
+            }
+        });
+
+        // Handle Skin Type selection
+        skinList.addEventListener('click', (e) => {
+            if (e.target.tagName === 'LI') {
+                selections.skinType = e.target.textContent;
+                // Update selected class for styling
+                document.querySelectorAll('#skin-list li').forEach(li => li.classList.remove('selected'));
+                e.target.classList.add('selected');
+                render();
+            }
+        });
+
+        // Handle Product Category selection
+        productCategoryList.addEventListener('click', (e) => {
+            if (e.target.tagName === 'LI') {
+                const category = e.target.dataset.category;
+                selections.productCategory = category;
+                // We no longer clear selections.kinds here, as we want to keep added products
+                selections.selectedKindData = null; // Clear selected kind data for flip card
+                updateProductCard(null); // Hide the flip card
+                populateKindDropdown(category);
+                render(); // Re-render to update product category display
+            }
+        });
+
+        // Handle "What Kind" ADD button clicks and display Product Card
+        kindListContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('add-btn')) {
+                const btn = e.target;
+                const kindName = btn.dataset.name;
+                const kindPrice = parseFloat(btn.dataset.price);
+                const kindImg = btn.dataset.img;
+                const kindIngredients = btn.dataset.ingredients;
+                const kindRating = parseFloat(btn.dataset.rating);
+
+                // Add or increment quantity for the selected kind
+                if (selections.kinds[kindName]) {
+                    selections.kinds[kindName].quantity++;
+                } else {
+                    selections.kinds[kindName] = {
+                        name: kindName,
+                        price: kindPrice,
+                        img: kindImg,
+                        ingredients: kindIngredients,
+                        rating: kindRating,
+                        quantity: 1
+                    };
+                }
+                selections.selectedKindData = selections.kinds[kindName]; // Update last clicked for flip card
+                render();
+                updateProductCard(selections.selectedKindData); // Update the flip card
+            }
+            // If a list item (LI) itself is clicked (not the button), just update the product card
+            else if (e.target.tagName === 'LI' && e.target.dataset.name) {
+                const kindName = e.target.dataset.name;
+                const kindData = {
+                    name: kindName,
+                    price: parseFloat(e.target.dataset.price),
+                    img: e.target.dataset.img,
+                    ingredients: e.target.dataset.ingredients,
+                    rating: parseFloat(e.target.dataset.rating)
+                };
+                selections.selectedKindData = kindData;
+                updateProductCard(selections.selectedKindData);
+            }
+        });
+
+        // Handle Quantity control buttons (+/-) in both summary and main display
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('quantity-btn')) {
+                const kindName = e.target.dataset.name;
+                if (selections.kinds[kindName]) {
+                    if (e.target.classList.contains('increase')) {
+                        selections.kinds[kindName].quantity++;
+                    } else if (e.target.classList.contains('decrease')) {
+                        selections.kinds[kindName].quantity--;
+                        if (selections.kinds[kindName].quantity <= 0) {
+                            delete selections.kinds[kindName]; // Remove if quantity drops to 0 or less
+                        }
+                    }
+                    render();
+                    // If the item whose quantity was changed is the one currently displayed in the flip card, update the card as well
+                    if (selections.selectedKindData && selections.selectedKindData.name === kindName) {
+                        updateProductCard(selections.kinds[kindName]);
+                    } else if (!selections.kinds[kindName] && selections.selectedKindData && selections.selectedKindData.name === kindName) {
+                        // If the item was removed from selections and it was the one in the card
+                        updateProductCard(null);
+                    }
+                }
+            }
+        });
+
+        // Handle flip card click
+        selectedProductCard.addEventListener('click', () => {
+            selectedProductCard.classList.toggle('flipped');
+        });
+
+            // --- NEW CODE FOR "READY SET ORDER" BUTTON LINK ---
+readyOrderBtn.addEventListener('click', () => {
+    // Filter out only the products that have a quantity greater than 0
+    const selectedProductsForOrder = Object.values(selections.kinds).filter(kind => kind.quantity > 0);
+
+    const orderData = {
+        skinType: selections.skinType,
+        selectedProducts: selectedProductsForOrder // This will now be an array of product objects
+    };
+    
+    // Store the order data in localStorage
+    localStorage.setItem('customerOrder', JSON.stringify(orderData));
+    
+    // Redirect to the order page
+    window.location.href = 'order.html'; // Make sure you have an order.html file
+});
+// --- END NEW CODE ---
+
+        // Initial render
+        render();
+    });
+</script>
+</body>
+</html>

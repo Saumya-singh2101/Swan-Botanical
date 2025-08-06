@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swan Botanicals - Payment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="payment.css">
+    <style>
+        /* This is the new CSS for the payment page to match the new theme */
+        :root {
+            --charcoal: #2C2C2A;
+            --forest-green: #2A4D3A;
+            --rich-umber: #4E3C2F;
+            --sage-green: #A2B089;
+            --serene-mint: #D9F8F0;
+            --white: #ffffff;
+            --button-hover: #74B288;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Playfair Display', serif;
+            color: var(--white);
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .background-container {
+            background-color: var(--charcoal);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .payment-container {
+            background-color: rgba(42, 77, 58, 0.8);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 800px;
+            width: 90%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .page-title {
+            font-family: 'Great Vibes', cursive;
+            font-weight: normal;
+            font-size: 3em;
+            color: var(--sage-green);
+            margin-bottom: 30px;
+        }
+
+        .payment-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .payment-option-btn {
+            background-color: var(--rich-umber);
+            color: var(--white);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-family: 'Playfair Display', serif;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .payment-option-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .payment-option-btn .icon {
+            margin-right: 10px;
+        }
+
+        .payment-details-section {
+            width: 100%;
+        }
+
+        .payment-method-content {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .payment-method-content h2 {
+            font-size: 1.5em;
+            color: var(--serene-mint);
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .confirm-btn, .action-btn {
+            background-color: var(--sage-green);
+            color: var(--forest-green);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-family: 'Playfair Display', serif;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+        }
+        
+        .confirm-btn:hover, .action-btn:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        .cancel-btn {
+            background-color: var(--rich-umber);
+            color: var(--white);
+        }
+
+        .cancel-btn:hover {
+            background-color: #A36B54;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--serene-mint);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .processing-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid var(--sage-green);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .processing-overlay p {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: var(--white);
+        }
+
+        .confirmation-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(42, 77, 58, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .success-animation {
+            margin-bottom: 20px;
+        }
+        
+        .circle-loader {
+            border: 3px solid rgba(0, 0, 0, 0.2);
+            border-left-color: var(--serene-mint);
+            animation: loader-spin 1.2s infinite linear;
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+        }
+        
+        .load-complete .circle-loader {
+            animation: none;
+            border-color: var(--serene-mint);
+            transition: border 500ms ease-out;
+        }
+        
+        .checkmark {
+            display: none;
+        }
+
+        .checkmark.draw:after {
+            animation-duration: 800ms;
+            animation-timing-function: ease;
+            animation-name: checkmark;
+            transform: scaleX(-1) rotate(135deg);
+        }
+        
+        .checkmark:after {
+            opacity: 1;
+            height: 50px;
+            width: 25px;
+            transform-origin: left top;
+            border-right: 3px solid var(--white);
+            border-top: 3px solid var(--white);
+            content: '';
+            left: 30px;
+            top: 60px;
+            position: absolute;
+        }
+        
+        @keyframes loader-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes checkmark {
+            0% { height: 0; width: 0; opacity: 1; }
+            20% { height: 0; width: 25px; opacity: 1; }
+            40% { height: 50px; width: 25px; opacity: 1; }
+            100% { height: 50px; width: 25px; opacity: 1; }
+        }
+
+        .confirmation-section h2 {
+            color: var(--serene-mint);
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5em;
+        }
+
+        .order-summary-details {
+            text-align: left;
+            width: 100%;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .order-summary-details h3 {
+            color: var(--sage-green);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .confirmation-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .message-box {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1em;
+            color: var(--white);
+            z-index: 1001;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .message-box.info { background-color: #3f51b5; }
+        .message-box.success { background-color: #4caf50; }
+        .message-box.error { background-color: #f44336; }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <main class="payment-container">
+            <h1 class="page-title">Choose Your Payment Method</h1>
+
+            <div class="payment-options">
+                <button class="payment-option-btn" data-method="cod">
+                    <span class="icon">💰</span> Cash on Delivery
+                </button>
+                <button class="payment-option-btn" data-method="ewallet">
+                    <span class="icon">💳</span> E-Wallet
+                </button>
+                <button class="payment-option-btn" data-method="card">
+                    <span class="icon">🏦</span> Credit/Debit Card
+                </button>
+            </div>
+
+            <div class="payment-details-section">
+                <div id="cod-section" class="payment-method-content hidden">
+                    <h2>Cash on Delivery</h2>
+                    <p>You will pay with cash when your order is delivered.</p>
+                    <button id="place-cod-order" class="confirm-btn">Confirm Order</button>
+                </div>
+
+                <div id="ewallet-section" class="payment-method-content hidden">
+                    <h2>Scan to Pay with E-Wallet</h2>
+                    <div id="qr-code-container">
+                        <img id="qr-code-img" src="" alt="QR Code" style="display:none;">
+                    </div>
+                    <p class="qr-instruction">Scan the QR code above to complete your payment.</p>
+                    <button id="ewallet-payment-done" class="confirm-btn">Payment Done (Simulate)</button>
+                </div>
+
+                <div id="card-section" class="payment-method-content hidden">
+                    <h2>Credit/Debit Card Details</h2>
+                    <form id="card-form">
+                        <div class="form-group">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX" required maxlength="19">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiry-date">Expiry Date</label>
+                                <input type="text" id="expiry-date" placeholder="MM/YY" required maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" placeholder="XXX" required maxlength="3">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="otp">OTP</label>
+                            <input type="text" id="otp" placeholder="Enter OTP" required maxlength="6">
+                        </div>
+                        <button type="submit" id="process-card-payment" class="confirm-btn">Process Payment</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="processing-overlay" class="processing-overlay hidden">
+                <div class="spinner"></div>
+                <p>Processing your order...</p>
+            </div>
+
+            <div id="confirmation-section" class="confirmation-section hidden">
+                <div class="success-animation">
+                    <div class="circle-loader">
+                        <div class="checkmark draw"></div>
+                    </div>
+                </div>
+                <h2>Order Placed Successfully!</h2>
+                <div class="order-summary-details">
+                    <h3>Order Summary</h3>
+                    <div id="final-order-items"></div>
+                    <p><strong>Subtotal:</strong> <span id="final-subtotal"></span></p>
+                    <p><strong>Discount:</strong> <span id="final-discount"></span></p>
+                    <p><strong>Total:</strong> <span id="final-total"></span></p>
+                    <p><strong>Estimated Delivery:</strong> <span id="estimated-delivery"></span></p>
+                </div>
+                <div class="confirmation-actions">
+                    <button id="go-home-btn" class="action-btn">Go Home</button>
+                    <button id="cancel-order-btn" class="action-btn cancel-btn">Cancel Order</button>
+                    <a href="rev1.html" id="review-link" class="action-btn">Leave a Review</a>
+                </div>
+            </div>
+
+            <div id="message-box" class="message-box hidden"></div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const paymentOptionBtns = document.querySelectorAll('.payment-option-btn');
+            const paymentMethodContents = document.querySelectorAll('.payment-method-content');
+            const processingOverlay = document.getElementById('processing-overlay');
+            const confirmationSection = document.getElementById('confirmation-section');
+            const messageBox = document.getElementById('message-box');
+
+            let currentOrder = null;
+
+            function showMessage(message, type = 'info') {
+                messageBox.textContent = message;
+                messageBox.className = `message-box ${type}`;
+                messageBox.classList.remove('hidden');
+                setTimeout(() => {
+                    messageBox.classList.add('hidden');
+                }, 3000);
+            }
+
+            function hideAllPaymentSections() {
+                paymentMethodContents.forEach(section => section.classList.add('hidden'));
+            }
+
+            function showProcessingOverlay() {
+                processingOverlay.classList.remove('hidden');
+            }
+
+            function hideProcessingOverlay() {
+                processingOverlay.classList.add('hidden');
+            }
+
+            function showConfirmationSection() {
+                confirmationSection.classList.remove('hidden');
+                const circleLoader = confirmationSection.querySelector('.circle-loader');
+                const checkmark = confirmationSection.querySelector('.checkmark');
+                circleLoader.classList.add('load-complete');
+                checkmark.style.display = 'block';
+            }
+
+            function hideConfirmationSection() {
+                confirmationSection.classList.add('hidden');
+                const circleLoader = confirmationSection.querySelector('.circle-loader');
+                const checkmark = confirmationSection.querySelector('.checkmark');
+                circleLoader.classList.remove('load-complete');
+                checkmark.style.display = 'none';
+            }
+
+            function getEstimatedDeliveryDate() {
+                const today = new Date();
+                const deliveryDate = new Date(today);
+                deliveryDate.setDate(today.getDate() + 5);
+                return deliveryDate.toDateString();
+            }
+
+            function displayOrderSummary(order) {
+                if (!order || !order.products) {
+                    document.getElementById('final-order-items').innerHTML = '<p>No order details found.</p>';
+                    document.getElementById('final-subtotal').textContent = '₹0';
+                    document.getElementById('final-discount').textContent = '-₹0';
+                    document.getElementById('final-total').textContent = '₹0';
+                    document.getElementById('estimated-delivery').textContent = 'N/A';
+                    return;
+                }
+
+                const itemsContainer = document.getElementById('final-order-items');
+                itemsContainer.innerHTML = '';
+
+                if (order.products.length === 0) {
+                    itemsContainer.innerHTML = '<p>No products ordered.</p>';
+                } else {
+                    order.products.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'summary-item';
+                        itemDiv.innerHTML = `<span>${item.name} x${item.quantity}</span><span>₹${(item.price * item.quantity).toFixed(2)}</span>`;
+                        itemsContainer.appendChild(itemDiv);
+                    });
+                }
+
+                document.getElementById('final-subtotal').textContent = `₹${order.subtotal.toFixed(2)}`;
+                document.getElementById('final-discount').textContent = `-₹${order.discountApplied.toFixed(2)}`;
+                document.getElementById('final-total').textContent = `₹${order.total.toFixed(2)}`;
+                document.getElementById('estimated-delivery').textContent = getEstimatedDeliveryDate();
+            }
+
+            function handlePaymentSuccess() {
+                hideProcessingOverlay();
+                showConfirmationSection();
+                displayOrderSummary(currentOrder);
+                localStorage.removeItem('finalOrderDetails');
+                localStorage.removeItem('productSelections');
+                localStorage.removeItem('customerOrder');
+            }
+
+            // Cash on Delivery
+            document.getElementById('place-cod-order').addEventListener('click', () => {
+                if (!currentOrder || !currentOrder.products || currentOrder.products.length === 0) {
+                    showMessage('Your cart is empty. Please add products before placing an order.', 'error');
+                    return;
+                }
+                showProcessingOverlay();
+                setTimeout(() => {
+                    handlePaymentSuccess();
+                    showMessage('COD Order Placed!', 'success');
+                }, 2000);
+            });
+
+            // E-Wallet
+            const qrCodeImg = document.getElementById('qr-code-img');
+            function generateQRCode(text, size = 200) {
+                const svg = `
+                    <svg width="${size}" height="${size}" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="0" width="200" height="200" fill="white"/>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="black">QR Code</text>
+                        <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" font-size="12" fill="black">${text.substring(0, 15)}...</text>
+                    </svg>
+                `;
+                qrCodeImg.src = `data:image/svg+xml;base64,${btoa(svg)}`;
+                qrCodeImg.style.display = 'block';
+            }
+
+            document.getElementById('ewallet-payment-done').addEventListener('click', () => {
+                if (!currentOrder || !currentOrder.products || currentOrder.products.length === 0) {
+                    showMessage('Your cart is empty. Please add products before making a payment.', 'error');
+                    return;
+                }
+                showProcessingOverlay();
+                setTimeout(() => {
+                    handlePaymentSuccess();
+                    showMessage('E-Wallet Payment Confirmed!', 'success');
+                }, 2000);
+            });
+
+            // Credit/Debit Card
+            const cardForm = document.getElementById('card-form');
+            document.getElementById('process-card-payment').addEventListener('click', (event) => {
+                event.preventDefault();
+
+                if (!currentOrder || !currentOrder.products || currentOrder.products.length === 0) {
+                    showMessage('Your cart is empty. Please add products before making a payment.', 'error');
+                    return;
+                }
+
+                const cardNumber = document.getElementById('card-number').value.trim();
+                const expiryDate = document.getElementById('expiry-date').value.trim();
+                const cvv = document.getElementById('cvv').value.trim();
+                const otp = document.getElementById('otp').value.trim();
+
+                if (!cardNumber || !expiryDate || !cvv || !otp) {
+                    showMessage('Please fill in all card details and OTP.', 'error');
+                    return;
+                }
+
+                if (cardNumber.replace(/\s/g, '').length !== 16 || expiryDate.length !== 5 || cvv.length !== 3 || otp.length !== 6) {
+                    showMessage('Please enter valid details for Card Number (16 digits), Expiry (MM/YY), CVV (3 digits), and OTP (6 digits).', 'error');
+                    return;
+                }
+
+                showProcessingOverlay();
+                setTimeout(() => {
+                    handlePaymentSuccess();
+                    showMessage('Card Payment Processed Successfully!', 'success');
+                }, 2000);
+            });
+
+            // Event Listeners for Payment Option Buttons
+            paymentOptionBtns.forEach(button => {
+                button.addEventListener('click', () => {
+                    const method = button.dataset.method;
+                    hideAllPaymentSections();
+                    hideConfirmationSection();
+                    hideProcessingOverlay();
+                    document.getElementById(`${method}-section`).classList.remove('hidden');
+
+                    if (method === 'ewallet') {
+                        const totalAmount = currentOrder ? currentOrder.total : 0;
+                        generateQRCode(`SWANBOTANICALS_ORDER_${totalAmount.toFixed(2)}`);
+                    }
+                });
+            });
+
+            // Action Buttons (Go Home, Cancel Order, Leave a Review)
+            document.getElementById('go-home-btn').addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+
+            document.getElementById('cancel-order-btn').addEventListener('click', () => {
+                localStorage.removeItem('finalOrderDetails');
+                localStorage.removeItem('productSelections');
+                localStorage.removeItem('customerOrder');
+                showMessage('Order cancelled successfully!', 'info');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            });
+
+            // Initialization on Load
+            const savedOrder = localStorage.getItem('finalOrderDetails');
+            if (savedOrder) {
+                currentOrder = JSON.parse(savedOrder);
+                currentOrder.subtotal = parseFloat(currentOrder.subtotal) || 0;
+                currentOrder.discountApplied = parseFloat(currentOrder.discountApplied) || 0;
+                currentOrder.total = parseFloat(currentOrder.total) || 0;
+            } else {
+                showMessage('No order found. Please select products first.', 'error');
+                paymentOptionBtns.forEach(btn => btn.disabled = true);
+            }
+        });
+    </script>
+</body>
+</html>

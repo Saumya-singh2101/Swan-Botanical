@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swan Botanical – What Inspires Us</title>
+  <link rel="stylesheet" href="inspire.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Playfair Display', serif;
+      background: url('what_inspire_us.png') no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
+    }
+
+    .background-container-about {
+      position: relative;
+      padding: 80px 30px;
+      min-height: 100vh;
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(14px);
+      border-radius: 25px;
+      margin: 40px auto;
+      width: 90%;
+      max-width: 1000px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .about-main-content {
+      color: #fff;
+    }
+
+    .about-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 40px;
+      color: #ffffffcc;
+      animation: slideDown 1.5s ease;
+    }
+
+    .about-content-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      animation: fadeInUp 1.5s ease;
+    }
+
+    .about-text-left, .about-quotes-right {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #f4f4f4;
+    }
+
+    .about-quotes-right {
+      font-style: italic;
+    }
+
+    .believe-in-title {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: #c8facc;
+    }
+
+    .back-link-container {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    .back-link {
+      padding: 10px 20px;
+      border: 2px solid #c8facc;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      background-color: transparent;
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      background-color: #c8facc;
+      color: #1a1a1a;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(40px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating leaf animation */
+    .floating-leaf {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: rgba(200, 250, 204, 0.3);
+      border-radius: 50% 50% 60% 40% / 50% 40% 60% 50%;
+      animation: floatLeaf linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes floatLeaf {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(60vw) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background-container-about">
+    <main class="about-main-content">
+      <h1 class="about-title">What Inspires Us</h1>
+
+      <div class="about-content-layout">
+        <div class="about-text-left">
+          <p>
+            At the heart of Swan Botanicals is a promise – a promise made by a mother to care, protect, and nourish. Inspired by the gentle touch of maternal love, we craft skincare that's pure, safe, and effective. Nature gives us healing, and mothers show us how to care. That's why every bottle we create reflects the softness of a swan, the strength of botanicals, and the trust of love that never fades.
+          </p>
+        </div>
+        <div class="about-quotes-right">
+          <p class="quote">"Nature heals. A mother nurtures. At Swan Botanical, we honor both in every drop."</p>
+          <p class="quote">"Skincare isn't just a ritual — it's an act of love, rooted in trust and tenderness."</p>
+          <p class="quote">"Inspired by the purity of nature and the care of a mother, we create beauty that's gentle, honest, and kind."</p>
+          <h2 class="believe-in-title">What We Believe In</h2>
+        </div>
+      </div>
+
+      <p class="back-link-container"><a href="index.html" class="back-link">Back to Home</a></p>
+    </main>
+  </div>
+
+  <script>
+    // Generate floating mint leaves
+    const leafCount = 12;
+    const container = document.body;
+
+    for (let i = 0; i < leafCount; i++) {
+      const leaf = document.createElement('div');
+      leaf.classList.add('floating-leaf');
+      leaf.style.left = Math.random() * 100 + 'vw';
+      leaf.style.animationDuration = (8 + Math.random() * 4) + 's';
+      leaf.style.top = '100%';
+      container.appendChild(leaf);
+    }
+  </script>
+</body>
+</html>

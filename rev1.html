@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us – Leave a Review</title>
+    <style>
+        :root {
+            --green-1: #c0e5d4;
+            --green-2: #d4e8d0;
+            --green-3: #97b897;
+            --green-4: #577f5b;
+            --green-5: #e6f9ef;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, var(--green-1), var(--green-2), var(--green-3), var(--green-4), var(--green-5));
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #f7cf4d, #ffffff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glitterMove 4s linear infinite;
+        }
+
+        @keyframes glitterMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        p.slogan {
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .review-box {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(6px);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            border-radius: 12px;
+            border: none;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+
+        .emojis {
+            font-size: 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .emojis span {
+            transition: transform 0.2s ease;
+        }
+
+        .emojis span:hover {
+            transform: scale(1.3);
+        }
+
+        .selected {
+            transform: scale(1.5);
+            filter: drop-shadow(0 0 3px white);
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: var(--green-4);
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--green-3);
+        }
+
+        .review-list {
+            margin-top: 2rem;
+            text-align: left;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .review-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            color: #fff;
+            animation: floaty 6s ease-in-out infinite;
+        }
+
+        @keyframes floaty {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #aaa;
+            font-weight: bold;
+            font-size: 1.2rem;
+            z-index: 1000;
+            animation: fadeIn 1s ease;
+        }
+
+        #popupSuccess {
+            background: lavender;
+            color: #333;
+        }
+
+        #popupComplaint {
+            background: #fff;
+            color: #333;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Leave a Lovely Review 🌿</h1>
+    <p class="slogan">"Your words light up our day like sunshine on leaves"</p>
+
+    <div class="review-box">
+        <textarea id="review" placeholder="Write your review or feedback here..."></textarea>
+        <textarea id="complaint" placeholder="(Optional) Any complaint or issue?"></textarea>
+
+        <div class="emojis" id="emojiRating">
+            <span data-value="1">😡</span>
+            <span data-value="2">😕</span>
+            <span data-value="3">😐</span>
+            <span data-value="4">😊</span>
+            <span data-value="5">🤩</span>
+        </div>
+
+        <button onclick="submitReview()">Submit</button>
+    </div>
+
+    <div class="review-list" id="reviewsContainer"></div>
+
+    <div id="popupSuccess" class="popup">🌸 Thank you for your valuable feedback! 🌸</div>
+    <div id="popupComplaint" class="popup">🌸 Submitted successfully! Our team will contact you soon. 🌸</div>
+
+    <script>
+        const emojiContainer = document.getElementById('emojiRating');
+        const emojis = emojiContainer.querySelectorAll('span');
+        let selectedEmojiValue = 0;
+
+        emojis.forEach(emoji => {
+            emoji.addEventListener('click', () => {
+                selectedEmojiValue = parseInt(emoji.getAttribute('data-value'));
+                emojis.forEach(e => e.classList.remove('selected'));
+                emoji.classList.add('selected');
+            });
+        });
+
+        function submitReview() {
+            const reviewText = document.getElementById('review').value.trim();
+            const complaintText = document.getElementById('complaint').value.trim();
+            if (!reviewText || selectedEmojiValue === 0) return alert("Please enter a review and choose an emoji!");
+
+            const reviewData = { text: reviewText, emoji: selectedEmojiValue, complaint: complaintText };
+            const reviews = JSON.parse(localStorage.getItem('contactReviews') || '[]');
+            reviews.unshift(reviewData);
+            localStorage.setItem('contactReviews', JSON.stringify(reviews));
+            document.getElementById('review').value = '';
+            document.getElementById('complaint').value = '';
+            emojis.forEach(e => e.classList.remove('selected'));
+            selectedEmojiValue = 0;
+            renderReviews();
+            showPopup(!!complaintText);
+        }
+
+        function renderReviews() {
+            const emojiMap = {
+                1: '😡', 2: '😕', 3: '😐', 4: '😊', 5: '🤩'
+            };
+            const reviews = JSON.parse(localStorage.getItem('contactReviews') || '[]');
+            const container = document.getElementById('reviewsContainer');
+            container.innerHTML = '';
+            reviews.forEach(r => {
+                const div = document.createElement('div');
+                div.className = 'review-item';
+                div.innerHTML = `<strong>${emojiMap[r.emoji]}</strong><br>${r.text}${r.complaint ? '<br><em>Complaint: ' + r.complaint + '</em>' : ''}`;
+                container.appendChild(div);
+            });
+        }
+
+        function showPopup(hasComplaint) {
+            const popupSuccess = document.getElementById('popupSuccess');
+            const popupComplaint = document.getElementById('popupComplaint');
+
+            if (hasComplaint) {
+                popupComplaint.style.display = 'block';
+                setTimeout(() => popupComplaint.style.display = 'none', 3000);
+            } else {
+                popupSuccess.style.display = 'block';
+                setTimeout(() => popupSuccess.style.display = 'none', 3000);
+            }
+        }
+
+        renderReviews();
+    </script>
+</body>
+</html>

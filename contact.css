@@ -1,0 +1,978 @@
+/* Basic Reset & Body Styling */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Montserrat', sans-serif; /* Global font */
+    color: #76d78d; /* Light text color for contrast on dark backgrounds */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Background Container for Home Page - uses flowers.jpg */
+.background-container-home {
+ background-image: url('flowers.jpg'); /* Changed from home_bg.png to flowers.jpg */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main Content Area for Home Page */
+.home-main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* The Central Semi-Transparent Box on the Home Page */
+.home-content-box {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    padding: 50px 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    max-width: 90%;
+    width: 400px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Site Title "Swan Botanicals" */
+.site-title {
+    font-family: 'Great Vibes', cursive;
+    font-weight: normal;
+    font-size: 3.5em;
+    color: #e0e0e0;
+    margin-bottom: 30px;
+    line-height: 1.2;
+}
+
+/* Navigation Links for Home Page */
+.home-nav-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.home-nav-links li {
+    margin: 0;
+}
+
+.home-nav-links a {
+    text-decoration: none;
+    color: #f0f0f0;
+    font-size: 1.1em;
+    padding: 15px 20px;
+    display: block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.home-nav-links li:last-child a {
+    border-bottom: none;
+}
+
+.home-nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+/* Slogan at the bottom of the box */
+.home-slogan {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.6em;
+    margin-top: 40px;
+    color: #fff;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    line-height: 1.4;
+    padding: 0 10px;
+}
+
+/* Responsive adjustments for home content box */
+@media (max-width: 768px) {
+    .home-content-box {
+        width: 95%;
+        padding: 30px 15px;
+    }
+    .site-title {
+        font-size: 2.8em;
+    }
+    .home-nav-links a {
+        font-size: 1em;
+        padding: 12px 15px;
+    }
+    .home-slogan {
+        font-size: 1.3em;
+        margin-top: 30px;
+    }
+}
+
+/* --- Homepage Sections Styling (Speciality & Testimonials) --- */
+
+/* General container for content within sections */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Our Speciality Section */
+.speciality-section {
+    background-color: #e6f5e6;
+    padding: 60px 0;
+    text-align: center;
+    color: #2d3e2f;
+    box-sizing: border-box;
+}
+
+.speciality-section h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+    margin-bottom: 40px;
+    color: #3b4c3b;
+}
+
+.speciality-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.speciality-item {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;
+}
+
+.speciality-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.speciality-item h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    color: #4a6a4a;
+    margin-bottom: 15px;
+}
+
+.speciality-item p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Homepage Testimonials Section */
+.testimonials-section {
+    background-color: #f7fdf7;
+    padding: 80px 0;
+    text-align: center;
+    color: #2d3e2f;
+    box-sizing: border-box;
+}
+
+.testimonials-container-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    padding: 50px 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    color: #2d3e2f;
+}
+
+#testimonials-title-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 50px;
+}
+
+.testimonials-main-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+    color: #3b4c3b;
+    position: relative;
+    z-index: 2;
+}
+
+.floating-title-letter {
+    position: absolute;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.5em;
+    color: #a0e0c0;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    white-space: nowrap;
+}
+
+@keyframes floatAndFadeTestimonials {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.8);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(calc(var(--offset-x) * 1px), calc(var(--offset-y) * 1px)) scale(1.1);
+    }
+    80% {
+        opacity: 0.8;
+        transform: translate(calc(var(--offset-x-end) * 1px), calc(var(--offset-y-end) * 1px)) scale(0.9);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(calc(var(--offset-x-end) * 1px), calc(var(--offset-y-end) * 1px)) scale(0.7);
+    }
+}
+
+.floating-title-letter.animate-title-float {
+    animation: floatAndFadeTestimonials 2s ease-out forwards;
+}
+
+.testimonial-slider {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.testimonial-item {
+    background-color: #f0f0f0;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    max-width: 400px;
+    text-align: left;
+    flex: 1 1 300px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.testimonial-item p {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    line-height: 1.7;
+    font-style: italic;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.testimonial-item .customer-name {
+    font-family: 'Lora', serif;
+    font-weight: bold;
+    color: #4a6a4a;
+    font-style: normal;
+    text-align: right;
+    margin-top: 20px;
+}
+
+/* Site Footer Styling */
+.site-footer {
+    background-color: #2d3e2f;
+    color: #e6f5e6;
+    padding: 25px 0;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Responsive Adjustments for new sections (homepage) */
+@media (max-width: 768px) {
+    .speciality-section h2,
+    .testimonials-main-title {
+        font-size: 36px;
+    }
+
+    .speciality-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .testimonials-container-box {
+        padding: 30px 15px;
+    }
+
+    .testimonial-item {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .speciality-section,
+    .testimonials-section {
+        padding: 40px 0;
+    }
+    .speciality-item,
+    .testimonial-item {
+        padding: 20px;
+    }
+    .testimonials-main-title {
+        font-size: 30px;
+    }
+    .floating-title-letter {
+        font-size: 1.2em;
+    }
+}
+
+
+/* --- Contact Us Page Styling (Existing & New Sections) --- */
+
+.background-container-contact {
+    background-image: url('contact_bg.png'); /* Use your contact background image */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* Allow content to stack vertically */
+    align-items: center; /* Center items horizontally */
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.contact-main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1000px; /* Increased max-width for the grid */
+    margin: 0 auto 60px auto; /* Margin at bottom for spacing to next section */
+    text-align: center;
+    padding: 20px;
+}
+
+.contact-title {
+    font-family: 'Great Vibes', cursive;
+    font-weight: normal;
+    font-size: 5em;
+    color: #e6f5e6;
+    margin-bottom: 10px;
+    text-shadow: 0 0 15px rgba(0,0,0,0.8);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.contact-slogan {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5em;
+    color: #f0f0f0;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    text-shadow: 0 0 10px rgba(0,0,0,0.7);
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+/* --- NEW: Grid for Contact Items --- */
+.contact-details-grid {
+    width: 100%;
+    display: grid;
+    /* Two columns, second one takes up more space */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+    align-items: stretch; /* Make all items in a row the same height */
+}
+
+/* Basic styling for all contact items */
+.contact-item {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden; /* Important for testimonial box */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    box-sizing: border-box; /* Include padding/border in width */
+}
+
+.contact-item:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+.contact-icon {
+    font-size: 4em;
+    margin-bottom: 15px;
+}
+
+/* Phone Ringing Animation */
+@keyframes ring {
+    0% { transform: rotate(0deg); }
+    15% { transform: rotate(10deg); }
+    30% { transform: rotate(-10deg); }
+    45% { transform: rotate(10deg); }
+    60% { transform: rotate(-10deg); }
+    75% { transform: rotate(5deg); }
+    90% { transform: rotate(-5deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.phone-icon.animate-ring {
+    animation: ring 0.8s ease-in-out;
+}
+
+/* Email Floating Letters Animation */
+.email-text-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.animated-letter {
+    position: absolute;
+    font-size: 2.5em;
+    color: #a0e0c0;
+    font-weight: bold;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+    font-family: 'Great Vibes', cursive;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes floatAndFade {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(calc(-50% + var(--rand-x) * 1px), calc(-50% + var(--rand-y) * 1px)) scale(1.1);
+    }
+    80% {
+        opacity: 0.8;
+        transform: translate(calc(-50% + var(--rand-x-end) * 1px), calc(-50% + var(--rand-y-end) * 1px)) scale(0.9);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--rand-x-end) * 1px), calc(-50% + var(--rand-y-end) * 1px)) scale(0.7);
+    }
+}
+
+.animated-letter.animate-float {
+    animation: floatAndFade 1.5s ease-out forwards;
+}
+.letter-e { --rand-x: -120; --rand-y: -60; --rand-x-end: -180; --rand-y-end: -100; }
+.letter-m { --rand-x: 80; --rand-y: -90; --rand-x-end: 120; --rand-y-end: -150; }
+.letter-a { --rand-x: -100; --rand-y: 40; --rand-x-end: -150; --rand-y-end: 70; }
+.letter-i { --rand-x: 100; --rand-y: 50; --rand-x-end: 150; --rand-y-end: 80; }
+.letter-l { --rand-x: -70; --rand-y: -100; --rand-x-end: -110; --rand-y-end: -160; }
+
+
+.contact-link,
+.contact-text,
+.contact-value {
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.25em;
+    line-height: 1.4;
+}
+
+.contact-link {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+    color: #a0e0c0;
+}
+
+address.contact-value {
+    font-style: normal;
+}
+
+.social-media {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.social-media .contact-text {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    color: #f0f0f0;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.social-icon-link {
+    color: #e6f5e6;
+    font-size: 3em;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.social-icon-link:hover {
+    color: #a0e0c0;
+    transform: scale(1.1);
+}
+
+.contact-back-link {
+    display: block;
+    margin-top: 50px;
+    padding: 15px 30px;
+    background-color: #3b4c3b;
+    color: #e6f5e6;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 1.3em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: auto;
+    max-width: 250px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.contact-back-link:hover {
+    background-color: #2d3e2f;
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Responsive adjustments for Contact Us page (main content) */
+@media (max-width: 768px) {
+    .contact-main-content {
+        padding: 20px 15px;
+    }
+    .contact-title {
+        font-size: 4em;
+    }
+    .contact-slogan {
+        font-size: 1.3em;
+    }
+    .contact-icon {
+        font-size: 3.5em;
+    }
+    .contact-link {
+        font-size: 1.3em;
+    }
+    .contact-text,
+    .contact-value {
+        font-size: 1.1em;
+    }
+    .social-icon-link {
+        font-size: 2.5em;
+    }
+    .animated-letter {
+        font-size: 2em;
+    }
+    .contact-details-grid { /* Adjusted for smaller screens */
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-title {
+        font-size: 3em;
+        padding: 8px 15px;
+    }
+    .contact-slogan {
+        font-size: 1.1em;
+        padding: 8px 15px;
+        margin-bottom: 30px;
+    }
+    .contact-item {
+        padding: 20px;
+        gap: 10px;
+    }
+    .contact-icon {
+        font-size: 3em;
+    }
+    .contact-link {
+        font-size: 1.1em;
+    }
+    .contact-text,
+    .contact-value {
+        font-size: 0.9em;
+    }
+    .animated-letter {
+        font-size: 1.8em;
+    }
+    .social-icon-link {
+        font-size: 2em;
+    }
+    .contact-back-link {
+        font-size: 1.1em;
+        padding: 10px 20px;
+        max-width: 180px;
+    }
+}
+
+
+/* --- Contact Page Testimonials Item (now part of the grid) --- */
+.contact-testimonials-item {
+    /* Takes up 2/3 of the width in a 3-column layout, or full width if less columns */
+    grid-column: span 2; /* Occupy two columns when grid has enough space */
+    min-height: 350px; /* Ensure sufficient height for floating testimonials */
+    justify-content: flex-start; /* Align content to the top */
+    padding-bottom: 10px; /* Reduce bottom padding for internal container */
+}
+
+/* This is the title *inside* the contact-item, for testimonials or other new boxes */
+.contact-item-title {
+    font-family: 'Great Vibes', cursive; /* A more elegant font for this title */
+    font-size: 2.8em; /* Slightly smaller than main page title */
+    color: #e6f5e6; /* Light green */
+    margin-bottom: 20px;
+    text-shadow: 0 0 8px rgba(0,0,0,0.5);
+    text-align: center;
+    width: 100%; /* Ensure it centers within its box */
+}
+
+.floating-testimonials-container {
+    position: relative; /* Crucial for absolute positioning of testimonials */
+    width: calc(100% - 20px); /* Fill most of the box, leave some margin */
+    height: 100%; /* Take up available height */
+    /* background-color: rgba(255,0,0,0.05); /* For debugging area */
+    margin-top: 20px; /* Space from title */
+    flex-grow: 1; /* Allows it to take up available vertical space */
+}
+
+.floating-testimonial-item-single { /* Renamed class for clarity */
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.95); /* Nearly opaque white */
+    color: #333; /* Dark text for readability */
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+    width: 200px; /* Smaller fixed width for more to fit */
+    text-align: left;
+    transform-origin: center center;
+    opacity: 0;
+    /* pointer-events: none; - REMOVED: Needs to be clickable */
+    font-family: 'Lora', serif;
+    font-size: 0.9em; /* Smaller font size */
+    line-height: 1.4;
+    z-index: 1; /* Below other content */
+    cursor: pointer; /* Indicate it's clickable */
+    transition: transform 0.1s ease-out; /* Slight pop on hover/click */
+}
+
+.floating-testimonial-item-single:hover {
+    transform: scale(1.03); /* Slight scale on hover */
+}
+
+.floating-testimonial-item-single p {
+    margin-bottom: 8px;
+    font-size: 1em;
+    font-style: italic;
+}
+
+.floating-testimonial-item-single .customer-name {
+    font-weight: bold;
+    text-align: right;
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Keyframe for floating and tilting testimonials within the box */
+@keyframes floatAndTiltBoxed {
+    0% {
+        opacity: 0;
+        transform: translate(var(--start-x), var(--start-y)) scale(0.6) rotate(var(--start-rotate));
+    }
+    10% {
+        opacity: 0.9;
+    }
+    80% {
+        opacity: 0.8;
+        transform: translate(var(--mid-x), var(--mid-y)) scale(0.9) rotate(var(--mid-rotate));
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--end-x), var(--end-y)) scale(0.5) rotate(var(--end-rotate));
+    }
+}
+
+.floating-testimonial-item-single.animate-float-tilt-boxed {
+    animation: floatAndTiltBoxed var(--animation-duration) ease-out forwards;
+}
+
+/* --- Contact Page FAQ Section Styling --- */
+.contact-faq-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+    box-sizing: border-box;
+}
+
+.contact-faq-container-box {
+    background-color: rgba(0, 0, 0, 0.7); /* Darker background for FAQ box */
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    padding: 50px 40px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+    max-width: 900px;
+    width: 100%;
+    text-align: left; /* Left align text for questions/answers */
+    color: #f0f0f0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.contact-faq-container-box .contact-section-title {
+    text-align: center; /* Center title within the FAQ box */
+    margin-bottom: 50px;
+    color: #e6f5e6;
+}
+
+.faq-item {
+    background-color: rgba(255, 255, 255, 0.1); /* Lighter background for each FAQ item */
+    padding: 25px 30px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-left: 5px solid #a0e0c0; /* Accent border */
+}
+
+.faq-item:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
+}
+
+.faq-item h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5em;
+    color: #e6f5e6; /* Light text for questions */
+    margin-bottom: 10px;
+}
+
+.faq-item p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #cccccc; /* Slightly darker light text for answers */
+}
+
+/* Responsive adjustments for new contact sections */
+@media (min-width: 769px) {
+    /* On larger screens, testimonials box takes 2/3 and address takes 1/3 */
+    .contact-details-grid {
+        grid-template-columns: 1fr 2fr; /* One column for address, two for testimonials */
+    }
+    #address-contact {
+        grid-row: span 2; /* Make address span two rows */
+    }
+    #phone-contact {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+    }
+    #email-contact {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+    }
+    .contact-testimonials-item {
+        grid-column: 2 / 3; /* Occupy the second column entirely */
+        grid-row: 1 / 3; /* Span both rows */
+    }
+}
+
+
+@media (max-width: 768px) {
+    .contact-testimonials-item,
+    .contact-faq-container-box {
+        padding: 30px 20px;
+    }
+    .contact-section-title {
+        font-size: 2.8em;
+        margin-bottom: 30px;
+    }
+    /* Grid becomes single column on smaller screens */
+    .contact-details-grid {
+        grid-template-columns: 1fr;
+    }
+    .contact-testimonials-item {
+        grid-column: auto; /* Reset column span */
+        min-height: 300px; /* Adjust height for smaller screens */
+    }
+    .contact-item-title {
+        font-size: 2.2em;
+    }
+    .floating-testimonial-item-single {
+        width: 180px;
+        padding: 12px 18px;
+        font-size: 0.8em;
+    }
+    .faq-item {
+        padding: 20px 25px;
+    }
+    .faq-item h3 {
+        font-size: 1.3em;
+    }
+    .faq-item p {
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-testimonials-section,
+    .contact-faq-section {
+        padding: 40px 10px;
+    }
+    .contact-testimonials-item,
+    .contact-faq-container-box {
+        padding: 25px 15px;
+        border-radius: 15px;
+    }
+    .contact-section-title {
+        font-size: 2.2em;
+        margin-bottom: 25px;
+    }
+    .contact-item-title {
+        font-size: 1.8em;
+    }
+    .floating-testimonials-container {
+        min-height: 250px;
+    }
+    .floating-testimonial-item-single {
+        width: 160px; /* Even smaller width */
+        padding: 10px 15px;
+        font-size: 0.75em;
+    }
+    .faq-item h3 {
+        font-size: 1.1em;
+    }
+    .faq-item p {
+        font-size: 0.9em;
+    }
+}
+
+/* --- NEW: Modal Styles --- */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
+    backdrop-filter: blur(8px); /* Blur effect on background */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0; /* Start hidden for transition */
+    pointer-events: none; /* Allow clicks through when hidden */
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto; /* Enable clicks when active */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto; /* Center the modal */
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+    color: #333; /* Dark text for readability on light background */
+    font-family: 'Montserrat', sans-serif;
+    transform: translateY(-50px); /* Start slightly above for animation */
+    opacity: 0; /* Start hidden for animation */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0); /* Move to original position */
+    opacity: 1; /* Fade in */
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 40px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-quote {
+    font-family: 'Lora', serif;
+    font-size: 1.6em;
+    line-height: 1.8;
+    font-style: italic;
+    margin-bottom: 25px;
+    color: #444;
+    text-align: center;
+}
+
+.modal-customer-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #555;
+    text-align: right;
+    margin-top: 15px;
+}
+
+/* Ensure body doesn't scroll when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Adjustments for floating testimonial item itself to be clickable */
+.floating-testimonial-item-single {
+    cursor: pointer; /* Indicate it's clickable */
+    /* pointer-events: none; REMOVED from previous version for clickability */
+}

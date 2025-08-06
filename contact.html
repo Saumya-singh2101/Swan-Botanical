@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Swan Botanicals</title>
+    <link rel="stylesheet" href="contact.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;404;500;700;800&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="contact-page">
+    <div class="background-container-contact">
+        <main class="contact-main-content">
+            <h1 class="contact-title">Let's Connect!</h1>
+            <p class="contact-slogan">We'd love to hear from you. Reach out with any questions or just to say hello!</p>
+
+            <div class="contact-details-grid">
+                <div class="contact-item" id="phone-contact">
+                    <span class="contact-icon phone-icon" role="img" aria-label="phone">📞</span>
+                    <span class="contact-text">Give us a ring:</span>
+                    <span class="contact-value">+91 9492785945</span>
+                </div>
+                <div class="contact-item" id="email-contact">
+                    <span class="contact-icon email-icon" role="img" aria-label="email">📧</span>
+                    <div class="email-text-container">
+                        <a href="mailto:info@swanbotanicals.com" class="contact-link">Email Us</a>
+                        <span class="contact-value">info@swanbotanicals.com</span>
+                        <span class="animated-letter letter-e">E</span>
+                        <span class="animated-letter letter-m">M</span>
+                        <span class="animated-letter letter-a">A</span>
+                        <span class="animated-letter letter-i">I</span>
+                        <span class="animated-letter letter-l">L</span>
+                    </div>
+                </div>
+
+                <div class="contact-item" id="address-contact">
+                    <span class="contact-icon" role="img" aria-label="location">📍</span>
+                    <span class="contact-text">Our Address:</span>
+                    <address class="contact-value">
+                       Mahatma Gandhi , <br>
+                        inner ring road, <br>
+                       Guntur pin code: 522034
+                    </address>
+                </div>
+
+                <div class="contact-item contact-testimonials-item" id="floating-testimonials-box">
+                    <h2 class="contact-item-title">What Our Customers Think</h2>
+                    <div class="floating-testimonials-container">
+                        </div>
+                </div>
+            </div>
+
+            <div class="social-media">
+                <p class="contact-text">Find us on:</p>
+                <div class="social-icons">
+                    <a href="#" class="social-icon-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon-link"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <a href="index.html" class="back-link contact-back-link">Go Back to Home</a>
+        </main>
+
+        <section class="contact-faq-section">
+            <div class="contact-faq-container-box">
+                <h2 class="contact-section-title">Frequently Asked Questions</h2>
+                <div class="faq-items">
+                    <div class="faq-item">
+                        <h3>What makes Swan Botanicals products unique?</h3>
+                        <p>Our products are crafted with 100% pure, ethically sourced botanical ingredients, handcrafted in small batches to ensure maximum potency and freshness. We are also committed to being cruelty-free and vegan.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Are your products suitable for sensitive skin?</h3>
+                        <p>Yes, we formulate our products with sensitive skin in mind, avoiding harsh chemicals, fragrances, and irritants. However, we always recommend a patch test before full application.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Do you ship internationally?</h3>
+                        <p>Currently, we ship within India. We are working to expand our shipping to international locations soon. Please check our shipping policy for the latest updates.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>What is your return policy?</h3>
+                        <p>We offer a 7-day return policy for unopened and unused products. Please refer to our detailed return and refund policy page for more information.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>How can I track my order?</h3>
+                        <p>Once your order is shipped, you will receive an email with a tracking number and a link to track your package. You can also log into your account on our website to view order status.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="testimonialModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p id="modalQuote" class="modal-quote"></p>
+            <p id="modalCustomerName" class="modal-customer-name"></p>
+        </div>
+    </div>
+
+    <script src="contact.js"></script>
+</body>
+</html>

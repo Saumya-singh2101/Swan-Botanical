@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Order - Swan Botanicals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="order.css"> 
+    <style>
+        /* Basic styles for demonstration. You should use your order.css for styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: #f0f4f0; /* Light green background */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top */
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .left-section {
+            flex: 1;
+            padding: 30px;
+            background-color: #f8fff8; /* Lighter green for left section */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .plant-decoration {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .plant-image {
+            max-width: 80%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .product-display {
+            width: 100%;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            color: #2e602e; /* Dark green */
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .selected-products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #e0e7e0;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            width: 180px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: 120px;
+            object-fit: contain;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .product-card h4 {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .product-card p {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .product-card .price {
+            font-weight: 600;
+            color: #2e602e;
+            font-size: 1.1em;
+        }
+
+        .right-section {
+            flex: 1;
+            padding: 30px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .cart-container, .discounts-container, .address-container, .checkout-container, .navigation {
+            padding: 20px;
+            border: 1px solid #e0e7e0;
+            border-radius: 10px;
+            background-color: #fdfdfd;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        /* --- NEW: Styles for Cart Header to hold button --- */
+        .cart-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .cart-title {
+             margin-bottom: 0; /* Remove margin as it's now in a flex container */
+        }
+        
+        #show-past-orders-btn {
+            background-color: #e0f2e0;
+            border: 1px solid #a0c2a0;
+            color: #2e602e;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        #show-past-orders-btn:hover {
+            background-color: #c2e0c2;
+        }
+
+
+        .discounts-container h3, .address-container h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            color: #2e602e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .cart-items {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px; /* For scrollbar */
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .cart-item-img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-details h4 {
+            margin: 0 0 5px 0;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .cart-item-details p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .quantity-btn {
+            background-color: #e0e7e0;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #2e602e;
+            transition: background-color 0.2s;
+        }
+
+        .quantity-btn:hover {
+            background-color: #c2e0c2;
+        }
+
+        .item-quantity {
+            min-width: 20px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .item-price {
+            font-weight: 600;
+            color: #2e602e;
+            min-width: 70px;
+            text-align: right;
+        }
+
+        .remove-item-btn {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .cart-summary div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .cart-summary .total {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #2e602e;
+            border-top: 1px solid #e0e7e0;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+
+        .discounts-container {
+            margin-top: 25px;
+        }
+
+        .discount-codes {
+            margin-bottom: 20px;
+        }
+
+        .discount-code {
+            background-color: #f9fdf9;
+            border: 1px dashed #d0edd0;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .discount-code.applied {
+            background-color: #d4edda;
+            border-color: #2e602e;
+            font-weight: bold;
+            color: #2e602e;
+        }
+
+        .discount-code:hover:not(.applied) {
+            background-color: #e0f2e0;
+        }
+
+        .coupon-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .coupon-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .coupon-input button {
+            background-color: #2e602e;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s;
+        }
+
+        .coupon-input button:hover {
+            background-color: #3e703e;
+        }
+
+        .address-container {
+            margin-top: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #2e602e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 25px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #3e703e;
+        }
+
+        .navigation {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-home-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #a0c2a0;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .back-home-btn:hover {
+            background-color: #8bb38b;
+        }
+        
+        /* --- STYLES FOR POP-UP MODAL --- */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex; /* Shown when active */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px 30px;
+            border-radius: 10px;
+            border: 1px solid #e0e7e0;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .close-modal {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover,
+        .close-modal:focus {
+            color: black;
+        }
+        
+        #past-orders-list-modal {
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .past-order-card {
+            background-color: #fff;
+            border: 1px solid #e0e7e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .past-order-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .past-order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .past-order-header h4 {
+            margin: 0;
+            font-size: 1.1em;
+            color: #2e602e;
+        }
+
+        .past-order-header .order-date {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .past-order-items-summary {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .past-order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .past-order-total {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .reorder-btn {
+            background-color: #a0c2a0;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s;
+        }
+
+        .reorder-btn:hover {
+            background-color: #8bb38b;
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .container { flex-direction: column; }
+            .left-section, .right-section { padding: 20px; }
+            .product-display { margin-top: 30px; }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { border-radius: 5px; }
+            .left-section, .right-section { padding: 15px; }
+            .section-title, .cart-title, .discounts-container h3, .address-container h3 { font-size: 1.8em; }
+            .product-card { width: 150px; padding: 10px; }
+            .product-card img { height: 100px; }
+            .form-row { flex-direction: column; gap: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <div class="plant-decoration">
+                <img src="home_bg.png" alt="Plant decoration" class="plant-image">
+            </div>
+            <div class="product-display">
+                <h2 class="section-title">Selected Products</h2>
+                <div class="selected-products" id="selected-products-display">
+                    <p id="no-products-message" style="text-align: center; color: #777; display: none;">No products selected yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <div class="cart-container">
+                <div class="cart-header">
+                    <h2 class="cart-title">Your Cart</h2>
+                    <button id="show-past-orders-btn">View Past Orders</button>
+                </div>
+                
+                <div class="cart-items" id="cart-items">
+                    <p id="empty-cart-message" style="text-align: center; color: #777; display: none;">Your cart is empty.</p>
+                </div>
+                <div class="cart-summary">
+                    <div class="subtotal">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">₹0.00</span>
+                    </div>
+                    <div class="discount">
+                        <span>Discount:</span>
+                        <span id="discount">-₹0.00</span>
+                    </div>
+                    <div class="total">
+                        <span>Total:</span>
+                        <span id="total">₹0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="discounts-container">
+                <h3>Available Discounts</h3>
+                <div class="discount-codes">
+                    <div class="discount-code" data-code="WELCOME10" data-percent="10">
+                        <span class="code">WELCOME10</span>
+                        <span class="description">10% off on first order</span>
+                    </div>
+                    <div class="discount-code" data-code="BEAUTY20" data-percent="20">
+                        <span class="code">BEAUTY20</span>
+                        <span class="description">20% off on beauty products</span>
+                    </div>
+                    <div class="discount-code" data-code="NATURAL15" data-percent="15">
+                        <span class="code">NATURAL15</span>
+                        <span class="description">15% off on natural products</span>
+                    </div>
+                </div>
+                <div class="coupon-input">
+                    <input type="text" id="coupon-input" placeholder="Enter coupon code">
+                    <button id="apply-coupon">Apply</button>
+                </div>
+                <p id="coupon-status" style="margin-top: 10px; font-size: 0.9em; text-align: center;"></p>
+            </div>
+
+            <div class="address-container">
+                <h3>Delivery Address</h3>
+                <form id="address-form">
+                    <div class="form-group">
+                        <input type="text" id="full-name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" placeholder="Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="address" placeholder="Full Address" rows="3" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" id="city" placeholder="City" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="pincode" placeholder="Pincode" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="checkout-container">
+                <button id="checkout-btn" class="checkout-btn">Proceed to Checkout</button>
+            </div>
+
+            <div class="navigation">
+                <a href="pronew.html" class="back-home-btn">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+    
+    <div id="past-orders-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="section-title" style="margin: 0;">Past Orders</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div id="past-orders-list-modal">
+                <p id="no-past-orders-message" style="text-align: center; color: #777;">You have no past orders.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ... (all existing const declarations)
+            const selectedProductsDisplay = document.getElementById('selected-products-display');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const subtotalSpan = document.getElementById('subtotal');
+            const discountSpan = document.getElementById('discount');
+            const totalSpan = document.getElementById('total');
+            const noProductsMessage = document.getElementById('no-products-message');
+            const emptyCartMessage = document.getElementById('empty-cart-message');
+            const couponInput = document.getElementById('coupon-input');
+            const applyCouponBtn = document.getElementById('apply-coupon');
+            const couponStatus = document.getElementById('coupon-status');
+            const discountCodesDivs = document.querySelectorAll('.discount-code');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const addressForm = document.getElementById('address-form');
+            
+            // --- NEW: Consts for Modal ---
+            const pastOrdersModal = document.getElementById('past-orders-modal');
+            const showPastOrdersBtn = document.getElementById('show-past-orders-btn');
+            const closeModalBtn = document.querySelector('.close-modal');
+            const pastOrdersListContainer = document.getElementById('past-orders-list-modal');
+            const noPastOrdersMessage = document.getElementById('no-past-orders-message');
+
+
+            let cart = [];
+            let currentDiscountPercent = 0;
+            let appliedCouponCode = null;
+
+            // --- Load and render past orders into the MODAL ---
+            const loadPastOrders = () => {
+                const pastOrdersString = localStorage.getItem('swanBotanicalsPastOrders');
+                const pastOrders = pastOrdersString ? JSON.parse(pastOrdersString) : [];
+
+                pastOrdersListContainer.innerHTML = ''; // Clear everything
+
+                if (pastOrders.length === 0) {
+                    pastOrdersListContainer.appendChild(noPastOrdersMessage);
+                } else {
+                    pastOrders.sort((a, b) => new Date(b.orderDate) - new Date(a.orderDate));
+                    pastOrders.forEach(order => {
+                        const orderCard = document.createElement('div');
+                        orderCard.classList.add('past-order-card');
+                        const itemNames = order.products.map(p => `${p.name} (x${p.quantity})`).join(', ');
+
+                        orderCard.innerHTML = `
+                            <div class="past-order-header">
+                                <h4>Order #${order.orderId}</h4>
+                                <span class="order-date">${new Date(order.orderDate).toLocaleDateString()}</span>
+                            </div>
+                            <div class="past-order-items-summary">
+                                <strong>Items:</strong> ${itemNames}
+                            </div>
+                            <div class="past-order-footer">
+                                 <span class="past-order-total">Total: ₹${order.total.toFixed(2)}</span>
+                                 <button class="reorder-btn" data-order-id="${order.orderId}">Reorder</button>
+                            </div>
+                        `;
+                        pastOrdersListContainer.appendChild(orderCard);
+                    });
+                }
+            };
+            
+            // --- Load Cart from Local Storage ---
+            const loadCart = () => {
+                const customerOrderString = localStorage.getItem('customerOrder');
+                if (customerOrderString) {
+                    const orderData = JSON.parse(customerOrderString);
+                    if (orderData.selectedProducts) {
+                        cart = orderData.selectedProducts;
+                    }
+                }
+                renderCart();
+            };
+
+            // --- Save Cart to Local Storage ---
+            const saveCart = () => {
+                localStorage.setItem('customerOrder', JSON.stringify({ selectedProducts: cart }));
+            };
+
+            // --- All other render functions (renderProductDisplay, renderCartItems, etc.) remain the same ---
+             const renderProductDisplay = () => {
+                selectedProductsDisplay.innerHTML = '';
+                if (cart.length === 0) {
+                    noProductsMessage.style.display = 'block';
+                } else {
+                    noProductsMessage.style.display = 'none';
+                    cart.forEach(product => {
+                        const productCard = document.createElement('div');
+                        productCard.classList.add('product-card');
+                        productCard.innerHTML = `
+                            <img src="${product.img}" alt="${product.name}">
+                            <h4>${product.name}</h4>
+                            <p>${product.ingredients}</p>
+                            <p class="price">₹${product.price.toFixed(2)}</p>
+                        `;
+                        selectedProductsDisplay.appendChild(productCard);
+                    });
+                }
+            };
+
+            const renderCartItems = () => {
+                cartItemsContainer.innerHTML = '';
+                if (cart.length === 0) {
+                    emptyCartMessage.style.display = 'block';
+                } else {
+                    emptyCartMessage.style.display = 'none';
+                    cart.forEach(product => {
+                        const cartItem = document.createElement('div');
+                        cartItem.classList.add('cart-item');
+                        cartItem.setAttribute('data-name', product.name);
+                        cartItem.innerHTML = `
+                            <img src="${product.img}" alt="${product.name}" class="cart-item-img">
+                            <div class="cart-item-details">
+                                <h4>${product.name}</h4>
+                                <p>₹${product.price.toFixed(2)} each</p>
+                            </div>
+                            <div class="cart-item-controls">
+                                <button class="quantity-btn decrease" data-name="${product.name}">-</button>
+                                <span class="item-quantity">${product.quantity}</span>
+                                <button class="quantity-btn increase" data-name="${product.name}">+</button>
+                            </div>
+                            <span class="item-price">₹${(product.price * product.quantity).toFixed(2)}</span>
+                            <button class="remove-item-btn" data-name="${product.name}">&times;</button>
+                        `;
+                        cartItemsContainer.appendChild(cartItem);
+                    });
+                }
+            };
+
+            const updateCartSummary = () => {
+                let currentSubtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                let currentDiscountAmount = currentSubtotal * (currentDiscountPercent / 100);
+                let currentTotal = currentSubtotal - currentDiscountAmount;
+
+                subtotalSpan.textContent = `₹${currentSubtotal.toFixed(2)}`;
+                discountSpan.textContent = `-₹${currentDiscountAmount.toFixed(2)}`;
+                totalSpan.textContent = `₹${currentTotal.toFixed(2)}`;
+            };
+
+            const renderCart = () => {
+                renderProductDisplay();
+                renderCartItems();
+                updateCartSummary();
+                saveCart();
+            };
+
+            // --- Event Listeners for MODAL ---
+            showPastOrdersBtn.addEventListener('click', () => {
+                loadPastOrders(); // Load fresh data every time it's opened
+                pastOrdersModal.classList.add('active');
+            });
+            
+            closeModalBtn.addEventListener('click', () => {
+                pastOrdersModal.classList.remove('active');
+            });
+
+            pastOrdersModal.addEventListener('click', (e) => {
+                if (e.target === pastOrdersModal) { // Click on overlay background
+                    pastOrdersModal.classList.remove('active');
+                }
+            });
+
+            // --- Event Listener for REORDER button inside Modal ---
+            pastOrdersListContainer.addEventListener('click', e => {
+                if (e.target.classList.contains('reorder-btn')) {
+                    const orderIdToReorder = parseInt(e.target.dataset.orderId, 10);
+                    
+                    const pastOrdersString = localStorage.getItem('swanBotanicalsPastOrders');
+                    const pastOrders = pastOrdersString ? JSON.parse(pastOrdersString) : [];
+                    const orderToReorder = pastOrders.find(order => order.orderId === orderIdToReorder);
+
+                    if (orderToReorder) {
+                        if (confirm('This will replace your current cart with the items from this past order. Do you want to continue?')) {
+                            cart = orderToReorder.products;
+                            currentDiscountPercent = 0;
+                            appliedCouponCode = null;
+                            couponInput.value = '';
+                            couponStatus.textContent = '';
+                            discountCodesDivs.forEach(div => div.classList.remove('applied'));
+                            
+                            renderCart();
+                            pastOrdersModal.classList.remove('active'); // Close modal after reorder
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            alert('Items from your past order have been added to your cart!');
+                        }
+                    }
+                }
+            });
+
+            // --- All other event listeners remain the same ---
+            cartItemsContainer.addEventListener('click', (e) => {
+                const target = e.target;
+                if (target.classList.contains('quantity-btn')) {
+                    const productName = target.dataset.name;
+                    const productInCart = cart.find(item => item.name === productName);
+                    if (productInCart) {
+                        if (target.classList.contains('increase')) {
+                            productInCart.quantity++;
+                        } else if (target.classList.contains('decrease')) {
+                            productInCart.quantity--;
+                            if (productInCart.quantity <= 0) {
+                                cart = cart.filter(item => item.name !== productName);
+                            }
+                        }
+                        renderCart();
+                    }
+                } else if (target.classList.contains('remove-item-btn')) {
+                    const productName = target.dataset.name;
+                    cart = cart.filter(item => item.name !== productName);
+                    renderCart();
+                }
+            });
+
+            applyCouponBtn.addEventListener('click', () => {
+                const enteredCode = couponInput.value.trim().toUpperCase();
+                let foundDiscount = null;
+                discountCodesDivs.forEach(div => div.classList.remove('applied'));
+                couponStatus.textContent = '';
+                currentDiscountPercent = 0;
+                appliedCouponCode = null;
+                discountCodesDivs.forEach(div => {
+                    if (div.dataset.code === enteredCode) {
+                        foundDiscount = { code: div.dataset.code, percent: parseFloat(div.dataset.percent) };
+                        div.classList.add('applied');
+                    }
+                });
+                if (foundDiscount) {
+                    currentDiscountPercent = foundDiscount.percent;
+                    appliedCouponCode = foundDiscount.code;
+                    couponStatus.textContent = `Coupon "${appliedCouponCode}" applied! You get ${currentDiscountPercent}% off.`;
+                    couponStatus.style.color = '#1f4d1f';
+                } else if (enteredCode) {
+                    couponStatus.textContent = 'Invalid or expired coupon code.';
+                    couponStatus.style.color = '#e74c3c';
+                } else {
+                    couponStatus.textContent = 'Please enter a coupon code.';
+                    couponStatus.style.color = '#888';
+                }
+                updateCartSummary();
+            });
+
+            discountCodesDivs.forEach(div => {
+                div.addEventListener('click', () => {
+                    couponInput.value = div.dataset.code;
+                    applyCouponBtn.click();
+                });
+            });
+
+            checkoutBtn.addEventListener('click', (e) => {
+                e.preventDefault(); 
+                if (cart.length === 0) {
+                    alert('Your cart is empty.');
+                    return;
+                }
+                if (!addressForm.checkValidity()) {
+                    alert('Please fill in all required address details.');
+                    addressForm.reportValidity(); 
+                    return;
+                }
+                
+                const pastOrdersString = localStorage.getItem('swanBotanicalsPastOrders');
+                let pastOrders = pastOrdersString ? JSON.parse(pastOrdersString) : [];
+                const finalOrderDetails = {
+                    orderId: Date.now(),
+                    products: cart,
+                    subtotal: parseFloat(subtotalSpan.textContent.replace('₹', '')),
+                    discountApplied: parseFloat(discountSpan.textContent.replace('-₹', '')),
+                    total: parseFloat(totalSpan.textContent.replace('₹', '')),
+                    appliedCoupon: appliedCouponCode,
+                    deliveryAddress: {
+                        fullName: document.getElementById('full-name').value,
+                        email: document.getElementById('email').value,
+                        phone: document.getElementById('phone').value,
+                        address: document.getElementById('address').value,
+                        city: document.getElementById('city').value,
+                        pincode: document.getElementById('pincode').value
+                    },
+                    orderDate: new Date().toISOString()
+                };
+                
+                pastOrders.push(finalOrderDetails);
+                localStorage.setItem('swanBotanicalsPastOrders', JSON.stringify(pastOrders));
+                localStorage.setItem('finalOrderDetails', JSON.stringify(finalOrderDetails)); 
+                localStorage.removeItem('customerOrder');
+
+                window.location.href = 'pay1.html'; 
+            });
+
+            // Initial load when the page is ready
+            loadCart();
+        });
+    </script>
+</body>
+</html>

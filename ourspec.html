@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Swan Botanicals - Our Speciality</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: 'Playfair Display', serif;
+      color: #333;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background-image: url('leaf.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 20px;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    .content {
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeInSlideUp 1s ease-out forwards;
+      background-color: rgba(42, 77, 58, 0.7); /* Dark green overlay */
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    h1.page-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3em;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      margin-bottom: 20px;
+    }
+
+    .content p, .content ul li {
+      font-size: 1.1em;
+      line-height: 1.6;
+      color: #f0f0f0;
+      background-color: rgba(255, 255, 255, 0);
+      padding: 8px;
+      transition: background-color 0.4s ease, color 0.3s ease;
+      border-radius: 6px;
+      text-align: justify;
+    }
+
+    .content p:hover, .content ul li:hover {
+      background-color: rgba(255, 192, 203, 0.1);
+      color: #ffc0cb;
+    }
+
+    .highlight {
+      color: #ffb6c1;
+      font-weight: bold;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+    }
+
+    ul li {
+      position: relative;
+      padding-left: 35px;
+      cursor: pointer;
+    }
+
+    ul li::before {
+      content: '🌸';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      transition: transform 0.6s ease;
+      display: inline-block;
+    }
+
+    ul li:hover::before {
+      transform: rotate(360deg);
+    }
+
+    .product-images-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      width: 180px;
+      height: 180px;
+      perspective: 1000px;
+      border-radius: 50%;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      border-radius: 50%;
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .flip-card-front img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #F3B8C8;
+    }
+
+    .flip-card-back {
+      background-color: #2A4D3A;
+      color: white;
+      transform: rotateY(180deg);
+      padding: 15px;
+      text-align: center;
+      border: 3px solid #D9F8F0;
+    }
+
+    .flip-card-back h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1em;
+      margin-bottom: 10px;
+      color: #D9F8F0;
+    }
+
+    .flip-card-back p {
+      font-size: 0.85em;
+      margin: 0;
+    }
+
+    .button-container {
+      margin-top: 30px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .button {
+      padding: 12px 25px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1em;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .back-button {
+      background-color: #A2B089;
+      color: #2A4D3A;
+    }
+
+    .back-button:hover {
+      background-color: #74B288;
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    .shiny-button {
+      background: #D9F8F0; /* Serene Mint base */
+      color: #2A4D3A;
+      font-weight: bold;
+      animation: growAndPulse 2s infinite ease-in-out;
+    }
+
+    .shiny-button::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+      transform: rotate(30deg) translate(-200%, -200%);
+      transition: transform 0.5s ease-out;
+      opacity: 0;
+    }
+
+    .shiny-button:hover::after {
+      transform: rotate(30deg) translate(0%, 0%);
+      opacity: 1;
+      transition: transform 1s ease-in, opacity 0.5s ease-in;
+    }
+
+    @keyframes fadeInSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes growAndPulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    
+    @media (max-width: 768px) {
+        .content {
+            padding: 20px;
+        }
+        .page-title {
+            font-size: 2.5em;
+        }
+        .content p, .content ul li {
+            font-size: 1em;
+        }
+        .button-container {
+            flex-direction: column;
+        }
+        .button {
+            width: 80%;
+            margin: 0 auto;
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-content">
+    <div class="content">
+      <h1 class="page-title">Our Speciality: Guaranteed Gentle Care</h1>
+      <p>At Swan Botanicals, our unwavering commitment to your skin's well-being is our defining speciality. We stand by our promise of <span class="highlight">"Guaranteed Gentle Care"</span>, a philosophy deeply rooted in our founder's personal journey and our dedication to safety.</p>
+      <p>This promise is brought to life through our meticulous <span class="highlight">multi-stage testing process</span>. Every product undergoes a rigorous journey, ensuring it meets the highest standards of safety and efficacy. Our testing includes:</p>
+      <ul>
+        <li>Extensive internal evaluations for purity and stability.</li>
+        <li>Thorough <span class="highlight">customer feedback sessions</span>.</li>
+        <li>Independent <span class="highlight">dermatologist verification</span>.</li>
+        <li>Adherence to national standards with our <span class="highlight">AYUSH license</span>.</li>
+      </ul>
+      <p>By combining scientific rigor with authentic user experience, Swan Botanicals distinguishes itself as a brand where safety and gentle effectiveness are deeply embedded.</p>
+
+      <div class="product-images-grid">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="hairoil.jpg" onerror="this.onerror=null;this.src='https://placehold.co/180x180/A2B089/2A4D3A?text=Hair+Oil';" alt="Hair Oil">
+            </div>
+            <div class="flip-card-back">
+              <h3>Hair Oil</h3>
+              <p>Argan Oil, Jojoba Oil, Rosemary Extract, Bhringraj, Amla, Hibiscus.</p>
+            </div>
+          </div>
+        </div>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="conditioner.jpg" onerror="this.onerror=null;this.src='https://placehold.co/180x180/A2B089/2A4D3A?text=Conditioner';" alt="Conditioner">
+            </div>
+            <div class="flip-card-back">
+              <h3>Conditioner</h3>
+              <p>Aloe Vera, Coconut Milk, Shea Butter, Green Tea Extract, Vitamin E.</p>
+            </div>
+          </div>
+        </div>
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="pack.jpg" onerror="this.onerror=null;this.src='https://placehold.co/180x180/A2B089/2A4D3A?text=Pack';" alt="Pack">
+            </div>
+            <div class="flip-card-back">
+              <h3>Pack</h3>
+              <p>Argan Oil, Tea Tree Oil, Peppermint, Aloe Vera, Vitamin B5.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-container">
+        <a href="ouringri.html" class="button shiny-button">Explore Our Ingredients</a>
+        <a href="index.html" class="button back-button">Back to Home</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
